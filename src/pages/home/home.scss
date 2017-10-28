@@ -1,3 +1,36 @@
 page-home {
+  .home {
+    background: color($colors, secondary);
+    color: color($colors, light);
+  }
+
+  .toolbar-title {
+    text-align: center;
+  }
+
+  .tabs-md .tab-button-icon {
+    color: #2ad4d4;
+  }
+
+  .temp {
+    font-size: 90px;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  .location, .icon, .desc {
+    text-align: center;
+  }
+
+  .icon img {
+    width: 10rem;
+  }
+
+  .location {
+    font-size: 40px;
+  }
+  .desc {
+    font-size: 30px;
+  }
 
 }

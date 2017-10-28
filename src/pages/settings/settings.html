@@ -1,0 +1,40 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+      <ion-title>Settings</ion-title>
+    </ion-navbar>
+
+  </ion-header>
+
+
+  <ion-content class="settings" padding>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-100>
+          <ion-list>
+            <ion-item>
+              <ion-label>Current Location</ion-label>
+              <ion-toggle [(ngModel)]="geoLocation" (ionChange)="saveChoice()"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!geoLocation">
+        <ion-col width-100>
+          <ion-list>
+            <form (ngSubmit)="saveLocationInformation()">
+              <ion-item block>
+                <ion-label fixed>City</ion-label>
+                <ion-input [(ngModel)]="city" name="city" type="text"></ion-input>
+              </ion-item>
+              <ion-item block>
+                <ion-label fixed>State/Country</ion-label>
+                <ion-input [(ngModel)]="state" name="state" type="state"></ion-input>
+              </ion-item>
+              <button ion-button type="submit" block>Save Location</button>
+            </form>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
