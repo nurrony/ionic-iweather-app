@@ -1,8 +1,8 @@
 {
   "name": "ionic-weather-app",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "Nur Rony",
+  "homepage": "http://nmrony.info",
   "private": true,
   "config": {
     "ionic_copy": "./configs/copy.config.js",
