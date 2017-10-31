@@ -5,28 +5,40 @@
 </ion-header>
 
 <ion-content class="home" padding>
-  <ion-grid *ngIf="weather">
+  <ion-grid *ngIf="weatherInfo">
     <ion-row>
       <ion-col width-50 offset-25>
-        <h2 class="location">{{weather.display_location.full}}</h2>
-        <div class="icon">
-          <img [src]="weather.icon_url" />
-          <h3 class="desc">{{weather.weather}}</h3>
-          <h1 class="temp">{{weather.temp_c}}&deg;</h1>
+        <h2 class="location">{{weatherInfo.name}} {{weatherInfo.sys.country}}</h2>
+        <div class="weather-icon"><i class="owi owi-{{weatherInfo.weather.icon}}"></i></div>
+        <div>
+          <h4 class="desc">{{weatherInfo.weather.main}}</h4>
+          <p>({{weatherInfo.weather.description}})</p>
+          <h2 class="temp">{{weatherInfo.main.temp}}<span [innerHTML]="getTempUnit()"></span></h2>
         </div>
       </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <strong>Sunrise: </strong> {{getLocalTime(weatherInfo.sys.sunrise)}}
+      </ion-item>
+      <ion-item>
+        <strong>Sunset: </strong> {{getLocalTime(weatherInfo.sys.sunset)}}
+      </ion-item>
     </ion-row>
     <ion-row>
       <ion-col width-100>
         <ion-list>
           <ion-item>
-            <strong>Temp: </strong> {{weather.temperature_string}}
+            <strong>Max. Temp: </strong>{{weatherInfo.main.max_temp}}<span [innerHTML]="getTempUnit()"></span>
           </ion-item>
           <ion-item>
-            <strong>Relative Humidity: </strong> {{weather.relative_humidity}}
+              <strong>Min. Temp: </strong>{{weatherInfo.main.temp_min}}<span [innerHTML]="getTempUnit()"></span>
+            </ion-item>
+          <ion-item>
+            <strong>Relative Humidity: </strong> {{weatherInfo.main.humidity}} %
           </ion-item>
           <ion-item>
-            <strong>Feels like: </strong> {{weather.feelslike_string}}
+            <strong>Wind: </strong> {{weatherInfo.wind.speed}} {{ getSpeedUnit() }} {{weatherInfo.wind.deg}} &deg;
           </ion-item>
         </ion-list>
       </ion-col>

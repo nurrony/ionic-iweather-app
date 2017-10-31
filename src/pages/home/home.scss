@@ -1,7 +1,25 @@
 page-home {
+  text-align: center;
   .home {
     background: color($colors, secondary);
     color: color($colors, light);
+  }
+
+  .location {
+    font-size: 5rem;
+  }
+
+  .weather-icon {
+    font-size: 15rem;
+  }
+
+  .temp {
+    font-size: 5rem;
+  }
+
+  .desc {
+    font-size: 4rem;
+    margin: 5px auto;
   }
 
   .toolbar-title {
@@ -12,25 +30,5 @@ page-home {
     color: #2ad4d4;
   }
 
-  .temp {
-    font-size: 90px;
-    text-align: center;
-    font-weight: normal;
-  }
-
-  .location, .icon, .desc {
-    text-align: center;
-  }
-
-  .icon img {
-    width: 10rem;
-  }
-
-  .location {
-    font-size: 40px;
-  }
-  .desc {
-    font-size: 30px;
-  }
 
 }

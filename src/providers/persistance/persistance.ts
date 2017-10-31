@@ -12,11 +12,17 @@ export class PersistanceProvider {
     return this.storage.ready().then(() => {
       const locationPromise = this.storage.get('location')
       const geoLocationPromise = this.storage.get('geoLocation')
+      const unitPromise = this.storage.get('units')
 
-      return Promise.all([locationPromise, geoLocationPromise]).then(([weatherLocation, geoLocation]) => {
+      return Promise.all([
+        locationPromise,
+        geoLocationPromise,
+        unitPromise
+      ]).then(([weatherLocation, geoLocation, units]) => {
         const location = (weatherLocation && JSON.parse(weatherLocation)) || { state: 'Bangladesh', city: 'Chittagong' }
         geoLocation = geoLocation || false
-        return { location, geoLocation }
+        units = units || 'metric'
+        return { location, geoLocation, units }
       })
     })
   }
@@ -27,5 +33,9 @@ export class PersistanceProvider {
 
   setGeoLocationPreferance(geoLocation): Promise<boolean> {
     return this.storage.set('geoLocation', geoLocation)
+  }
+
+  setUnitPreferance(units: string): Promise<boolean> {
+    return this.storage.set('units', units)
   }
 }

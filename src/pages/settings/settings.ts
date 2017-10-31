@@ -12,6 +12,7 @@ import { PersistanceProvider } from '../../providers/persistance/persistance'
 export class SettingsPage {
   city: string
   state: string
+  units: string
   geoLocation: boolean
 
   constructor(
@@ -24,10 +25,12 @@ export class SettingsPage {
   loadDataFromStorage() {
     this.persistanceProvider
       .getSettings()
-      .then(({ location, geoLocation }) => {
+      .then(({ location, geoLocation, units }) => {
         this.city = location.city
         this.state = location.state
         this.geoLocation = geoLocation
+        this.units = units
+        console.log( this.city, this.state, this.geoLocation, this.units)
       })
       .catch(error => this.errorHandler(error))
   }
@@ -54,14 +57,23 @@ export class SettingsPage {
   saveChoice() {
     this.persistanceProvider
       .setGeoLocationPreferance(this.geoLocation)
-      .then(saved => {
-        this.geoLocation
-        return (
+      .then(
+        saved =>
           this.geoLocation &&
           this.showToast('Location preference saved successfully.') &&
           this.navCtrl.setRoot(HomePage)
-        )
-      })
+      )
+      .catch(error => this.errorHandler(error))
+  }
+
+  saveUnit() {
+    this.persistanceProvider
+      .setUnitPreferance(this.units)
+      .then(
+        saved =>
+          saved &&
+          this.showToast('Data preference saved successfully.')
+      )
       .catch(error => this.errorHandler(error))
   }
 

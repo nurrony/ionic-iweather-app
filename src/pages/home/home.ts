@@ -16,7 +16,7 @@ export class HomePage {
   settings: any
   disConnectionSubscription: Subscription
   connectionSubscription: Subscription
-  weather: any
+  weatherInfo: any
 
   constructor(
     public platform: Platform,
@@ -32,16 +32,20 @@ export class HomePage {
   getWeather(): void {
     const loading = this.loadingCtrl.create({
       content: 'Fetching weather...',
-      spinner: 'crescent'
+      spinner: 'dots'
     })
     loading.present().then(() => {
-      this.weatherProvider.getWeather(this.settings.geoLocation, this.settings.location).then(weather => {
-        this.weather = weather['current_observation']
-        loading.dismiss()
-      }).catch(error => {
-        loading.dismiss()
-        this.errorHandler(error)
-      })
+      this.weatherProvider
+        .getWeather(this.settings.geoLocation, this.settings.location, this.settings.units)
+        .then(weather => {
+          this.weatherInfo = weather
+          this.weatherInfo.weather = this.weatherInfo.weather.pop()
+          loading.dismiss()
+        })
+        .catch(error => {
+          loading.dismiss()
+          this.errorHandler(error)
+        })
     })
   }
 
@@ -60,6 +64,14 @@ export class HomePage {
         this.watchNetworkDisconnectivity()
       })
       .catch(error => this.errorHandler(error))
+  }
+
+  getTempUnit() {
+    return this.settings.units === 'metric' ? '&#8451;' : '&#8457;'
+  }
+
+  getSpeedUnit() {
+    return this.settings.units === 'metric' ? 'm/s' : 'mi/s'
   }
 
   /**
@@ -115,6 +127,27 @@ export class HomePage {
     })
     toast.present()
     return true
+  }
+
+  getLocalTime(timestamp) {
+    const d = new Date(timestamp * 1000) // Convert the passed timestamp to milliseconds
+    const fullHour = d.getHours()
+    let hour = fullHour
+    const min = ('0' + d.getMinutes()).slice(-2) // Add leading 0.
+    let am_pm = 'AM'
+
+    if (fullHour > 12) {
+      hour = fullHour - 12
+      am_pm = 'PM'
+    } else if (fullHour === 12) {
+      hour = 12
+      am_pm = 'PM'
+    } else if (fullHour == 0) {
+      hour = 12
+    }
+
+    // 8:35 AM
+    return hour + ':' + min + ' ' + am_pm
   }
 
   /**
